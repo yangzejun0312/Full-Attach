@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9b312ef0-78b2-4acf-998f-6d22d6de0acf" name="默认更改列表" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="2uvSm6bPfRMMBQLQsS9W94gfu1O" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\pythonp\task_planning\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\pythonp\task_planning\data\input" />
+      <recent name="D:\pythonp\task_planning\src" />
+      <recent name="D:\pythonp\task_planning\data\output" />
+      <recent name="D:\pythonp\task_planning\utils" />
+      <recent name="D:\pythonp\task_planning\tests" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.test">
+    <configuration name="run (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="task_planning" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="task_planning" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="D:\pythonp\task_planning\src\run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="task_planning" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="task_planning" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="D:\pythonp\task_planning\src\test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.run (1)" />
+        <item itemvalue="Python.run" />
+        <item itemvalue="Python.run1" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9b312ef0-78b2-4acf-998f-6d22d6de0acf" name="默认更改列表" comment="" />
+      <created>1743127710366</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743127710366</updated>
+      <workItem from="1743127712758" duration="2638000" />
+      <workItem from="1743132709384" duration="1219000" />
+      <workItem from="1743148251883" duration="15123000" />
+      <workItem from="1744116257176" duration="2654000" />
+      <workItem from="1744166915285" duration="21479000" />
+      <workItem from="1744208441655" duration="873000" />
+      <workItem from="1744242614035" duration="10225000" />
+      <workItem from="1744262405168" duration="5160000" />
+      <workItem from="1744270200863" duration="1192000" />
+      <workItem from="1744281617786" duration="7000" />
+      <workItem from="1744343186393" duration="2630000" />
+      <workItem from="1744718739199" duration="16000" />
+      <workItem from="1744761733116" duration="6731000" />
+      <workItem from="1744800441316" duration="10000" />
+      <workItem from="1745234450747" duration="10760000" />
+      <workItem from="1745416421687" duration="17000" />
+      <workItem from="1745547296132" duration="1013000" />
+      <workItem from="1745561670365" duration="1014000" />
+      <workItem from="1745563669260" duration="6619000" />
+      <workItem from="1745814462731" duration="858000" />
+      <workItem from="1745821439004" duration="5948000" />
+      <workItem from="1745844748325" duration="3591000" />
+      <workItem from="1746081327407" duration="242000" />
+      <workItem from="1746081692930" duration="123000" />
+      <workItem from="1746139156996" duration="717000" />
+      <workItem from="1746174894645" duration="1477000" />
+      <workItem from="1746176721169" duration="530000" />
+      <workItem from="1746270525216" duration="7429000" />
+      <workItem from="1746321563690" duration="3060000" />
+      <workItem from="1746338223099" duration="4935000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="223" y="66" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1745564397084">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="223" y="66" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1745564397084" />
+    <state x="602" y="217" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1744251052331">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="602" y="217" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1743157997580" />
+    <state x="602" y="217" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.816@0.0.1536.816" timestamp="1744251052331" />
+    <state x="549" y="166" key="FileChooserDialogImpl" timestamp="1745416437543">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="549" y="166" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1745416437543" />
+    <state width="1493" height="125" key="GridCell.Tab.0.bottom" timestamp="1746347890441">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1493" height="247" key="GridCell.Tab.0.bottom/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1745848765234" />
+    <state width="1493" height="125" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1746347890441" />
+    <state width="1493" height="125" key="GridCell.Tab.0.center" timestamp="1746347890441">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1493" height="247" key="GridCell.Tab.0.center/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1745848765233" />
+    <state width="1493" height="125" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1746347890441" />
+    <state width="1493" height="125" key="GridCell.Tab.0.left" timestamp="1746347890441">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1493" height="247" key="GridCell.Tab.0.left/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1745848765233" />
+    <state width="1493" height="125" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1746347890441" />
+    <state width="1493" height="125" key="GridCell.Tab.0.right" timestamp="1746347890441">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1493" height="247" key="GridCell.Tab.0.right/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1745848765233" />
+    <state width="1493" height="125" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1746347890441" />
+    <state width="1478" height="255" key="GridCell.Tab.1.bottom" timestamp="1745246124605">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1480" height="256" key="GridCell.Tab.1.bottom/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1743130395385" />
+    <state width="1478" height="255" key="GridCell.Tab.1.bottom/0.0.1536.816@0.0.1536.816" timestamp="1745246124605" />
+    <state width="1478" height="255" key="GridCell.Tab.1.center" timestamp="1745246124605">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1480" height="256" key="GridCell.Tab.1.center/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1743130395385" />
+    <state width="1478" height="255" key="GridCell.Tab.1.center/0.0.1536.816@0.0.1536.816" timestamp="1745246124605" />
+    <state width="1478" height="255" key="GridCell.Tab.1.left" timestamp="1745246124605">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1480" height="256" key="GridCell.Tab.1.left/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1743130395384" />
+    <state width="1478" height="255" key="GridCell.Tab.1.left/0.0.1536.816@0.0.1536.816" timestamp="1745246124605" />
+    <state width="1478" height="255" key="GridCell.Tab.1.right" timestamp="1745246124605">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1480" height="256" key="GridCell.Tab.1.right/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1743130395385" />
+    <state width="1478" height="255" key="GridCell.Tab.1.right/0.0.1536.816@0.0.1536.816" timestamp="1745246124605" />
+    <state x="479" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1746338223206">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="479" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1745844752971" />
+    <state x="479" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.816@0.0.1536.816" timestamp="1746338223206" />
+    <state x="444" y="40" width="647" height="735" key="find.popup" timestamp="1744772348930">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="444" y="40" width="647" height="735" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1744772348930" />
+    <state x="431" y="137" key="search.everywhere.popup" timestamp="1743152034385">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="431" y="137" key="search.everywhere.popup/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1743152034385" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/task_planning$run.coverage" NAME="run Coverage Results" MODIFIED="1743165610153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/task_planning$test.coverage" NAME="test Coverage Results" MODIFIED="1746345865794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/task_planning$run1.coverage" NAME="run1 Coverage Results" MODIFIED="1743150158794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/task_planning$run__1_.coverage" NAME="run (1) Coverage Results" MODIFIED="1745242918887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+  </component>
+</project>
