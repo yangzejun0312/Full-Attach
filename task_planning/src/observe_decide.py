@@ -1,8 +1,25 @@
-from task_planning.utils.log_utils import *
+import os
+import sys
+project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_dir)
+from src.history_process import HistoryProcess
 from datetime import datetime
+from utils.prompt_process import get_prompt
+from utils.api_call import get_model_answer
+from typing import List
+import json
+from basic_config.paths import *
+from utils.log_utils import *
 
 class ObserveDecide():
-    def __init__(self, instruction: str = ""):
+    #参数views-三视角图片list
+    def __init__(self, instruction: str = "", vlm_name: str = "glm-4v-plus-0111",contexts: dict = None ,views: List[str] = None):
+       # 如果 contexts 是 None，则初始化为空字典
+        if contexts is None:
+            contexts = {}
+        # 如果 views 是 None，则初始化为空列表
+        if views is None:
+            views = []
         self.create_time = datetime.now().strftime("%Y-%m-%d")
         self.my_logger = High_Logger(log_file_name=f"{self.create_time}.log")
 
@@ -11,6 +28,10 @@ class ObserveDecide():
         self.action_result = []
         self.img_ref = set()
         self.progress = ""
+        self.prompt_template = get_prompt("ObserveDecide",contexts)
+        self.vlm_name = vlm_name
+        # 初始化多帧三视角图片
+        self.views = views  #默认每三秒传一次（现阶段）
     
     def add_action(self, action: str, result: str = ""):
         self.action_history.append(action)
@@ -42,59 +63,36 @@ class ObserveDecide():
                 "progress": self.progress
             }
         return content
-    
-async def _call_vlm_api(self, frame_set: List[str], views: List[str]) -> Dict:
-        """实际调用VLM API的逻辑"""
-        vlm_prompt = VLM_PROMPT_TEMPLATE
+    def call_vlm_api(self): #名称
+        #vlm配置文件地址
+        VLM_CONFIG_DIR = Path(os.path.abspath(__file__)).parents[1]  
         content = [
-            {"type": "text", "text": "### 核心任务要求"},
-            {"type": "text", "text": "1. 生成可直接执行的双臂控制指令\n2. 输出格式必须严格遵循下方要求"},
-            {"type": "text", "text": "### 用户指令\n" + (self.instruction or "无明确指令")},
-            {"type": "text", "text": "### 操作约束\n" + json.dumps({
-                "allowed_actions": ["pick", "put", "pinch", "open", "stay"],
-                "safety_rules": self.knowledge.get("safety_rules", [])
-            }, indent=2)}
-        ]
-
-        for frame, view in zip(frame_set, views):
+                {"type": "text", "text": self.instruction},
+            ]      
+        #执行历史、任务进展
+        # history_content = HistoryProcess().get_content() 
+        # content.append({
+        #     "type": "text",
+        #     "text": f"### 运行上下文\n{json.dumps(history_content, indent=2, ensure_ascii=False)}"
+        # })
+        for  view in self.views:
             content.extend([
-                {"type": "text", "text": f"### {view}视角"},
-                {"type": "image_url", "image_url": {"url": frame}}
+                {"type": "image_url",
+                 "image_url": {"url": f"data:image/png;base64,{view}"}}   #base64格式
             ])
-
-        context = {
-            "history": self.history_data["history"][-3:],
-            "last_errors": self.history_data.get("errors", [])
+        glm4v_test_case = [
+        {
+            "role": "system",
+            "content": self.prompt_template
+        },
+        {
+            "role": "user",
+            "content": content
         }
-        content.append({
-            "type": "text",
-            "text": f"### 运行上下文\n{json.dumps(context, indent=2, ensure_ascii=False)}"
-        })
-
-        content.append({
-            "type": "text",
-            "text": "### 坐标系说明\n原点为机器人基座中心，单位米\n- X轴：正向朝前\n- Y轴：正向向左\n- Z轴：正向向上"
-        })
-
-        async with aiohttp.ClientSession() as session:
-            async with session.post(
-                    "https://open.bigmodel.cn/api/paas/v4/chat/completions",
-                    headers={'Authorization': f'Bearer {self.api_key}', 'Content-Type': 'application/json'},
-                    json={
-                        "model": "glm-4v-plus-0111",
-                        "messages": [
-                            {"role": "system", "content": vlm_prompt["system"]},
-                            {"role": "user", "content": content}
-                        ],
-                        "temperature": 0.3,
-                        "response_format": {"type": "json_object"},
-                        "max_tokens": 2000
-                    }
-            ) as response:
-                if response.status != 200:
-                    error_detail = await response.text()
-                    logging.error(f"VLM API请求失败: {response.status}, 详情: {error_detail}")
-                    return {"error": "API请求失败"}
-
-                response_data = await response.json()
-                return self._parse_response(response_data["choices"][0]["message"]["content"])
+       ]
+        glm_response = get_model_answer(
+               model_name='glm-4v-plus-0111',
+               inputs_list=glm4v_test_case,
+               user_dir=VLM_CONFIG_DIR
+           )
+        return glm_response   #返回vlm的生成策略

@@ -1,4 +1,9 @@
-from task_planning.utils.log_utils import *
+import os
+import sys
+project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_dir)
+# from task_planning.utils.log_utils import *
+from utils.log_utils import *
 from datetime import datetime
 
 class HistoryProcess():
@@ -30,7 +35,7 @@ class HistoryProcess():
                 "instruction": self.instruction,
                 "action_history": "\n".join(self.action_history),
                 "action_result": "\n".join(self.action_result),
-                "img_ref": list(self.img_ref),
+                # "img_ref": list(self.img_ref),
                 "progress": self.progress
             }
         else:

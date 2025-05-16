@@ -1,5 +1,8 @@
 import logging
 import sys
+import os
+project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.append(project_dir)
 from basic_config.paths import *
 
 LOG_FILE_ROOT = TASK_PLANNING_ROOT / 'logs'

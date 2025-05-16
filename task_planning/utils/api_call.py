@@ -3,15 +3,15 @@ import os
 import random
 import time
 from pathlib import Path
-
-import google.generativeai as genai
-from openai import OpenAI
 import requests
-from langchain.llms.base import LLM
-from typing import Any, List, Optional
-from langchain.callbacks.manager import CallbackManagerForLLMRun
-from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, LlamaTokenizerFast
-import torch
+import asyncio
+import base64
+import aiohttp
+project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+import sys
+sys.path.append(project_dir)
+from utils.prompt_process import get_prompt
+
 
 # import zhipuai
 # zhipuai.api_key = "3fe121b978f1f456cfac1d2a1a9d8c06.iQsBvb1F54iFYfZq"
@@ -25,21 +25,126 @@ def get_model_answer(model_name, inputs_list, user_dir=LLM_CONFIG_DIR, stream=Fa
     if 'gpt' in model_name:
         model = OPENAI_API(model_name, user_dir=user_dir)
         answer = model.get_response(inputs_list, stream=stream)
-    elif 'baidu' in model_name:
-        model = BAIDU_API()
-        answer = model.get_response(inputs_list=inputs_list)
-    elif 'gemini' in model_name:
-        # # gemini在配置文件中配置时，需要配置好代理和Google相关信息
-        # model = GEMINI(model_name, project_root_path=project_root_path)
-        # answer = model.get_response(inputs_list)
-        answer = "NOT GEMINI"
-    elif 'qwen' in model_name:
-        model = QwenLocal_API(model_name, user_dir=user_dir)
-        answer = model.get_response(inputs_list, stream=stream)
+    elif 'glm-4v-plus-0111' in model_name:  
+       model = GLM4V_API(model_name, user_dir=user_dir)
+       answer = model.get_response(inputs_list)
+    elif 'glm-4-plus' in model_name:  
+       model = GLM4_API(model_name, user_dir=user_dir)
+       answer = model.get_response(inputs_list)
     else:
         model = OPENAI_API(model_name, user_dir=user_dir)  # 代理站中一般可以访问多种OPENAI接口形式的自定义模型，这里作为保底。
         answer = model.get_response(inputs_list, stream=stream)
     return answer
+
+class GLM4V_API:
+    """智谱视觉语言模型调用类"""
+    def __init__(self, model_name, user_dir):
+        self.USER_DIR = Path(user_dir)
+        self.CONFIG_PATH = self.USER_DIR / "config"
+        config = json.load(open(self.CONFIG_PATH / "lm_api.json"))
+        self.config = config["GLM4V_CONFIG"]
+        self.model_name = model_name
+        
+        self.api_key = self.config["API_KEY"]
+        self.base_url = self.config.get("BASE_URL", "https://open.bigmodel.cn/api/paas/v4/chat/completions")
+        self.temperature = self.config.get("TEMPERATURE")
+        self.max_tokens = self.config.get("MAX_TOKENS", 2000)
+        self.max_retries = self.config.get("MAX_RETRIES", 5)
+        self.timeout = aiohttp.ClientTimeout(total=30)
+
+    async def get_response_async(self, inputs_list):
+        """异步调用实现"""
+        headers = {
+            'Authorization': f'Bearer {self.api_key}',
+            'Content-Type': 'application/json'
+        }
+        
+        async with aiohttp.ClientSession(timeout=self.timeout) as session:
+            for attempt in range(self.max_retries):
+                try:
+                    async with session.post(
+                        self.base_url,
+                        headers=headers,
+                        json={
+                            "model": self.model_name,
+                            "messages": inputs_list,
+                            "temperature": self.temperature,
+                            "max_tokens": self.max_tokens,
+                            "response_format": {"type": "json_object"}
+                        }
+                    ) as response:
+                        if response.status == 200:
+                            data = await response.json()
+                            return data["choices"][0]["message"]["content"]
+                        else:
+                         error = await response.text()
+                         raise Exception(f"API 请求失败: {error}")
+                except Exception as e:
+                    await asyncio.sleep(2 ** attempt)
+                    
+            raise Exception("Max retries exceeded")
+
+    def get_response(self, inputs_list):
+        """同步封装接口"""
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        return loop.run_until_complete(self.get_response_async(inputs_list))
+    
+class GLM4_API:
+    """智谱LLM模型调用类"""
+    def __init__(self, model_name, user_dir):
+        self.USER_DIR = Path(user_dir)
+        self.CONFIG_PATH = self.USER_DIR / "config"
+        config = json.load(open(self.CONFIG_PATH / "lm_api.json"))
+        self.config = config["GLM4_CONFIG"]
+        self.model_name = model_name
+        
+        self.api_key = self.config["API_KEY"]
+        self.base_url = self.config.get("BASE_URL")
+        self.temperature = self.config.get("TEMPERATURE")
+        self.max_tokens = self.config.get("MAX_TOKENS")
+        self.max_retries = self.config.get("MAX_RETRIES")
+        self.timeout = aiohttp.ClientTimeout(total=30)
+
+    async def get_response_async(self, inputs_list):
+        """异步调用实现"""
+        headers = {
+            'Authorization': f'Bearer {self.api_key}',
+            'Content-Type': 'application/json'
+        }
+        
+        async with aiohttp.ClientSession(timeout=self.timeout) as session:
+            for attempt in range(self.max_retries):
+                try:
+                    async with session.post(
+                        self.base_url,
+                        headers=headers,
+                        json={
+                            "model": self.model_name,
+                            "messages": inputs_list,
+                            "temperature": self.temperature,
+                            "max_tokens": self.max_tokens,
+                            "response_format": {"type": "json_object"}
+                        }
+                    ) as response:
+                        if response.status == 200:
+                            data = await response.json()
+                            return data["choices"][0]["message"]["content"]
+                        else:
+                         error = await response.text()
+                         raise Exception(f"API 请求失败: {error}")
+                except Exception as e:
+                    await asyncio.sleep(2 ** attempt)
+                    
+            raise Exception("Max retries exceeded")
+
+    def get_response(self, inputs_list):
+        """同步封装接口"""
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        return loop.run_until_complete(self.get_response_async(inputs_list))
+
+
 
 
 class BAIDU_API:
@@ -262,44 +367,61 @@ class QwenLocal_API:
         return response
 
 
+
 if __name__ == '__main__':
-    LLM_CONFIG_DIR = Path(os.path.abspath(__file__)).parents[1] / "user_data" / "lintao"
-
-    # qwen
-    # llm = QwenLocal_API(model_name='qwen', user_dir=PROJECT_ROOT_PATH)
-    # inputs_list = [{"role": "system", "content": "你好"}, {"role": "user", "content": "你好"}]
-    # print(llm.get_response(inputs_list))
-
-    # # path: C:\python_code\npc_engine-main\example_project
-    inputs_list_openai = [{
-        "role": "system",
-        "content": """
-            请你扮演李大爷，特性是：李大爷是一个普通的种瓜老头，戴着文邹邹的金丝眼镜，喜欢喝茶，平常最爱吃烤烧鸡喝乌龙茶；上午他喜欢呆在家里喝茶，下午他会在村口卖瓜，晚上他会去瓜田护理自己的西瓜，心情是开心，正在李大爷家，现在时间是2021-01-01 12:00:00,
-            你的最近记忆:8年前李大爷的两个徒弟在工厂表现优异都获得表彰。
-            6年前从工厂辞职并过上普通的生活。
-            4年前孩子看望李大爷并带上大爷最爱喝的乌龙茶。，
-            你脑海中相关记忆:
-            15年前在工厂收了两个徒弟。，
-            你现在看到的人:['王大妈', '村长', '隐形李飞飞']，
-            你现在看到的物品:['椅子#1', '椅子#2', '椅子#3[李大爷占用]', '床']，
-            你现在看到的地点:['李大爷家大门', '李大爷家后门', '李大爷家院子']，
-            你当前的目的是:李大爷想去村口卖瓜，因为李大爷希望能够卖出新鲜的西瓜给村里的居民，让大家都能品尝到甜美可口的水果。
-        """},
+    VLM_CONFIG_DIR = Path(os.path.abspath(__file__)).parents[1] 
+ #测试输入的三视角图片   
+    image_paths = [
+    VLM_CONFIG_DIR / "data" / "input" / "image-hight1.png",
+    VLM_CONFIG_DIR / "data" / "input" / "image-left1.png",
+    VLM_CONFIG_DIR / "data" / "input" / "image-right1.png"
+]
+    
+    base64_images = []
+    for path in image_paths:
+        with open(path, "rb") as f:
+            base64_images.append(base64.b64encode(f.read()).decode('utf-8'))
+    base64_img1, base64_img2, base64_img3 = base64_images
+    # GLM-4V 多模态测试（需要先配置GLM4V_API的API_KEY）
+    context_single = {
+        0: {
+            "action_history": ["left pick white part from table"],
+            "action_result": ["success"],
+            "knowledge": "篮子里可存放三个物体"
+        }
+    } 
+    prompt = get_prompt("ObserveDecide",context_single)
+    glm4v_test_case = [
+        {
+            "role": "system",
+            # "content": "你是一名机器人专家，负责控制一台双臂机器人。机器人本体有两个机械臂，需要准确分析下一次执行装配动作"
+             "content": prompt
+        },
         {
             "role": "user",
-            "content": """
-            请你根据[行为定义]以及你现在看到的事物生成一个完整的行为，并且按照<动作|参数1|参数2>的结构返回：
-            行为定义：
-                [{'name': 'mov', 'definition': ('<mov|location|>，向[location]移动',), 'example': ('<mov|卧室|>',)}, {'name': 'get', 'definition': ('<get|object1|object2>，从[object2]中获得[object1]，[object2]处可为空',), 'example': ('<get|西瓜|>，获得西瓜',)}, {'name': 'put', 'definition': ('<put|object1|object2>，把[object2]放入[object1]',), 'example': ('<put|冰箱|西瓜>',)}, {'name': 'chat', 'definition': ('<chat|person|content>，对[person]说话，内容是[content]',), 'example': ('<chat|李大爷|李大爷你吃了吗>，对李大爷说你吃了吗',)}]
-            要求:
-                1.请务必按照以下形式返回动作、参数1、参数2的三元组以及行为描述："<动作|参数1|参数2>, 行为的描述"
-                2.动作和参数要在20字以内。
-                3.动作的对象必须要属于看到的范围！
-                4.三元组两侧必须要有尖括号<>
-                5.以一行的方式，返回单个结果
-            """},
+            "content": [
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/png;base64,{base64_img1}", # 测试图片URL
+                        "url": f"data:image/png;base64,{base64_img2}",
+                        "url": f"data:image/png;base64,{base64_img3}"
+                    }
+                },
+                {"type": "text", "text": "请分析以下工作场景图像,输出机械臂下一次执行装配动作"}
+            ]
+        }
     ]
+    
+    try:
+        print("\n" + "="*40 + " GLM-4V测试 " + "="*40)
+        glm_response = get_model_answer(
+            model_name='glm-4v-plus-0111',
+            inputs_list=glm4v_test_case,
+            user_dir=VLM_CONFIG_DIR
+        )
+        print("API响应原始数据：\n", glm_response)
+        
+    except Exception as e:
+        print(f"GLM-4V测试失败：{str(e)}")
 
-    # print(get_model_answer(model_name='gemini-pro', inputs_list=inputs_list_openai,project_root_path=PROJECT_ROOT_PATH))
-    print(get_model_answer(model_name='gpt-4o', inputs_list=inputs_list_openai,
-                           user_dir=LLM_CONFIG_DIR))
